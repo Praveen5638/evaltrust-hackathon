@@ -310,8 +310,45 @@ const OrganizerHackathonDetail = () => {
                   </div>
 
                   <div className="p-6 bg-muted/30 rounded-2xl border border-border flex items-center justify-between gap-6">
+                     <div>
+                       <p className="text-sm font-bold uppercase tracking-widest mb-1">Hackathon Status</p>
+                       <p className="text-[10px] text-muted-foreground">Active allows PPT submissions. Archived hides the event from the registration list.</p>
+                     </div>
+                     <Button 
+                       variant={hackathon.status === 'active' ? 'completed' : 'outline'} 
+                       size="sm" 
+                       onClick={async () => {
+                         const nextStatus = hackathon.status === 'active' ? 'archived' : 'active';
+                         const { error } = await supabase.from('hackathons').update({ status: nextStatus }).eq('id', id);
+                         if (!error) {
+                           setHackathon(prev => ({ ...prev, status: nextStatus }));
+                         } else {
+                           alert('Failed to update status: ' + error.message);
+                         }
+                       }}
+                     >
+                       {hackathon.status === 'active' ? 'Active' : 'Archived'}
+                     </Button>
+                  </div>
+
+                  <div className="p-6 bg-muted/30 rounded-2xl border border-border flex items-center justify-between gap-6">
                      <div><p className="text-sm font-bold uppercase tracking-widest mb-1">Delete Cluster</p><p className="text-[10px] text-muted-foreground text-destructive">Irreversibly remove all event data and scores.</p></div>
-                     <Button variant="failed" size="sm">Terminate</Button>
+                     <Button 
+                       variant="failed" 
+                       size="sm"
+                       onClick={async () => {
+                         if (window.confirm("CRITICAL WARNING: Are you sure you want to permanently delete this hackathon? This will permanently remove all scores, judges, teams, and submissions.")) {
+                           try {
+                             await api.deleteHackathon(id);
+                             navigate('/organizer/dashboard');
+                           } catch (err) {
+                             alert('Failed to delete hackathon: ' + err.message);
+                           }
+                         }
+                       }}
+                     >
+                       Terminate
+                     </Button>
                   </div>
                 </div>
               </Card>

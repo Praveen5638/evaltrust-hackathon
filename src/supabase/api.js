@@ -838,6 +838,7 @@ const api = {
   getJudges,
   getHackathons,
   getProjectDetails,
+  deleteHackathon,
 };
 
 export default api;
@@ -856,9 +857,32 @@ export const deleteJudge = async (judgeId) => {
 };
 
 /**
- * Delete a hackathon and all its related records
+ * Delete a hackathon and all its related records (with cascade delete for foreign keys)
  */
 export const deleteHackathon = async (id) => {
+  // 1. Get all ppt_submission IDs and team IDs for this hackathon
+  const { data: subs } = await supabase.from('ppt_submissions').select('id').eq('hackathon_id', id);
+  const { data: teams } = await supabase.from('teams').select('id').eq('hackathon_id', id);
+  
+  const subIds = (subs || []).map(s => s.id);
+  const teamIds = (teams || []).map(t => t.id);
+  const allTeamIds = [...subIds, ...teamIds];
+
+  // 2. Delete all scores related to these teams/submissions
+  if (allTeamIds.length > 0) {
+    await supabase.from('scores').delete().in('team_id', allTeamIds);
+  }
+
+  // 3. Delete teams
+  await supabase.from('teams').delete().eq('hackathon_id', id);
+
+  // 4. Delete ppt_submissions
+  await supabase.from('ppt_submissions').delete().eq('hackathon_id', id);
+
+  // 5. Delete judges
+  await supabase.from('judges').delete().eq('hackathon_id', id);
+
+  // 6. Finally delete the hackathon
   const { error } = await supabase.from('hackathons').delete().eq('id', id);
   if (error) throw error;
   return true;
