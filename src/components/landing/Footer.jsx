@@ -81,7 +81,7 @@ const Footer = () => {
 
         <div className="border-t border-gray-100 pt-8 flex flex-col md:flex-row justify-between items-center gap-8">
           <p className="text-gray-400 font-medium text-xs">
-            &copy; {new Date().getFullYear()} EvalTrust. All rights reserved.
+            &copy; {new Date().getFullYear()} EvalTrust. All rights reserved. • Built with ❤️ by Praveen
           </p>
           <div className="flex space-x-8">
             <a href="#" className="text-gray-400 font-medium text-xs hover:text-gray-800 transition-colors">Privacy Policy</a>

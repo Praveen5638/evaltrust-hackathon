@@ -2,6 +2,8 @@
 
 **EvalTrust** is a state-of-the-art, premium hackathon evaluation and management platform built using **React**, **Vite**, and **Supabase**. The platform focuses on maintaining absolute transparency, trust, and smooth UI/UX during the entire evaluation process of a hackathon.
 
+🔗 **Live Demo**: [https://hacktrust.netlify.app/](https://hacktrust.netlify.app/)
+
 With beautiful 3D backgrounds (Spline/Three.js), dynamic micro-animations, and responsive dashboard views, EvalTrust provides a seamless experience for **Organizers**, **Judges**, and **Participants**.
 
 ---
