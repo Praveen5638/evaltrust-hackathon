@@ -810,39 +810,6 @@ export const calculateFinalResults = async (hackathonId) => {
     }));
 };
 
-// ==================== EXPORTS ====================
-
-const api = {
-  submitPPT,
-  uploadPPTFile,
-  getSubmissions,
-  checkTeamSubmission,
-  saveEvaluation,
-  checkEvaluation,
-  registerJudge,
-  getLeaderboard,
-  shortlistTeams,
-  promoteTeams,
-  getAssignedTeams,
-  advanceTeamRound,
-  setGlobalLock,
-  checkGlobalLock,
-  setResultReveal,
-  checkResultReveal,
-  isEvaluationComplete,
-  calculateFinalResults,
-
-  // Compatibility aliases
-  addPPTSubmission: submitPPT,
-  getPPTSubmissions: getSubmissions,
-  getJudges,
-  getHackathons,
-  getProjectDetails,
-  deleteHackathon,
-};
-
-export default api;
-
 /**
  * Delete a judge record
  */
@@ -887,3 +854,36 @@ export const deleteHackathon = async (id) => {
   if (error) throw error;
   return true;
 };
+
+// ==================== EXPORTS ====================
+
+const api = {
+  submitPPT,
+  uploadPPTFile,
+  getSubmissions,
+  checkTeamSubmission,
+  saveEvaluation,
+  checkEvaluation,
+  registerJudge,
+  getLeaderboard,
+  shortlistTeams,
+  promoteTeams,
+  getAssignedTeams,
+  advanceTeamRound,
+  setGlobalLock,
+  checkGlobalLock,
+  setResultReveal,
+  checkResultReveal,
+  isEvaluationComplete,
+  calculateFinalResults,
+
+  // Compatibility aliases
+  addPPTSubmission: submitPPT,
+  getPPTSubmissions: getSubmissions,
+  getJudges,
+  getHackathons,
+  getProjectDetails,
+  deleteHackathon,
+};
+
+export default api;
